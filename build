@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -e -x
+
+GO_VER=${GO_VER:-1.5.2}
+
+mkdir -p  go
+
+export GOPATH="$PWD/go"
+
+#git clone https://github.com/influxdata/kapacitor.git "$PWD"/go/src/github.com/influxdata/kapacitor
+docker run -it --rm -v "${GOPATH}":/go -e "GOPATH=/go" -w /go/src/github.com/influxdata/kapacitor/ golang:$GO_VER sh -c './build.py' 
+docker build -t asdfsx/kapacitor .
